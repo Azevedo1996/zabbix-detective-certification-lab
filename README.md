@@ -2262,7 +2262,7 @@ Sugestão: adicione um arquivo `LICENSE` na raiz do projeto com o texto da licen
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Leonardo Azevedo** como material de apoio para treinamento Linux em formato interativo.
+Desenvolvido por **Leonardo Azevedo** como material de apoio para preparação para certificações zabbix em formato interativo.
 
 ---
 
