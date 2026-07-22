@@ -1,0 +1,54 @@
+{% extends 'game/base.html' %}
+{% block content %}
+<div class="zbx-card">
+    <div class="zbx-breadcrumb">{{ missao.sidebar_label|default:missao.titulo }} / {{ desafio.titulo }}</div>
+    <h2>{{ desafio.titulo }}</h2>
+
+    {% if desafio.contexto %}
+        <div class="concept-box">
+            <div class="concept-title">Antes de responder</div>
+            <p class="mb-0">{{ desafio.contexto }}</p>
+        </div>
+    {% endif %}
+
+    <div class="question-box">
+        <div class="question-title">Questão prática</div>
+        <p class="mb-0">{{ desafio.enunciado }}</p>
+    </div>
+
+    <div class="doc-mini">📚 Consulta oficial recomendada: <a href="{{ doc.url }}" target="_blank" rel="noopener">{{ doc.titulo }}</a></div>
+    {% include 'game/partials_feedback.html' %}
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        {% if desafio.tipo == 'texto' %}
+            <input class="form-control mb-3" name="answer" placeholder="Digite a resposta no formato solicitado pela questão">
+        {% elif desafio.tipo == 'multipla' %}
+            <div class="list-group mb-3">
+                {% for o in desafio.opcoes %}
+                    <label class="list-group-item"><input class="form-check-input me-2" type="radio" name="answer" value="{{ o.value }}">{{ o.label }}</label>
+                {% endfor %}
+            </div>
+        {% elif desafio.tipo == 'multiselect' %}
+            <div class="list-group mb-3">
+                {% for o in desafio.opcoes %}
+                    <label class="list-group-item"><input class="form-check-input me-2" type="checkbox" name="answer" value="{{ o.value }}">{{ o.label }}</label>
+                {% endfor %}
+            </div>
+        {% elif desafio.tipo == 'formulario' %}
+            <div class="zbx-form-grid">
+                {% for c in desafio.campos %}
+                    <label>{{ c.label }}</label>
+                    {% if c.type == 'select' %}
+                        <select class="form-select" name="{{ c.name }}"><option value="">Selecione uma opção</option>{% for opt in c.options %}<option>{{ opt }}</option>{% endfor %}</select>
+                    {% else %}
+                        <input class="form-control" name="{{ c.name }}" placeholder="{{ c.placeholder }}">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <button class="btn btn-danger mt-3">Responder</button>
+        {% if proximo and sucesso %}<a class="btn btn-outline-secondary mt-3 ms-2" href="{% url 'game:desafio_detail' proximo.slug %}">Próximo desafio</a>{% endif %}
+        <a class="btn btn-link mt-3" href="{% url 'game:missao_detail' missao.slug %}">Voltar à missão</a>
+    </form>
+</div>
+{% endblock %}

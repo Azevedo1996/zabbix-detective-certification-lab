@@ -1,0 +1,14 @@
+{% if feedback %}
+    <div class="alert {% if sucesso %}alert-success{% else %}alert-warning{% endif %} exam-feedback">
+        <strong>{{ feedback }}</strong>
+        {% if explicacao %}
+            <hr>
+            {% if sucesso %}
+                <div class="exam-label">Comentário estilo certificação</div>
+            {% else %}
+                <div class="exam-label">Pista de raciocínio</div>
+            {% endif %}
+            <p class="mb-0">{{ explicacao|urlize|linebreaksbr }}</p>
+        {% endif %}
+    </div>
+{% endif %}

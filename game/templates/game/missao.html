@@ -1,0 +1,25 @@
+{% extends 'game/base.html' %}
+{% block content %}
+<div class="zbx-card">
+    <div class="zbx-breadcrumb">Dashboard / {{ missao.sidebar_label|default:missao.titulo }}</div>
+    <h1>{{ missao.titulo }}</h1>
+    <p class="lead">{{ missao.descricao }}</p>
+    <div class="row g-3 align-items-center">
+        <div class="col-md-7">
+            <div class="progress"><div class="progress-bar bg-danger" style="width: {{ progresso.percent }}%">{{ progresso.percent }}%</div></div>
+            <small>{{ progresso.done }}/{{ progresso.total }} desafios concluídos nesta fase/missão.</small>
+        </div>
+        <div class="col-md-5">
+            <div class="doc-box">📚 Documentação oficial recomendada:<br><a href="{{ doc.url }}" target="_blank" rel="noopener">{{ doc.titulo }}</a></div>
+        </div>
+    </div>
+</div>
+<div class="list-group mt-3">
+    {% for d in desafios %}
+        <a href="{% url 'game:desafio_detail' d.slug %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span><strong>{{ forloop.counter }}. {{ d.titulo }}</strong><br><small>{{ d.get_tipo_display }}</small></span>
+            {% if d.slug in concluidos %}<span class="badge text-bg-success">Concluído</span>{% else %}<span class="badge text-bg-light text-dark">Pendente</span>{% endif %}
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}
