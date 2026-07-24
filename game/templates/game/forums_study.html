@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Fóruns de estudo</p>
+  <h1>Fóruns, comunidades e suporte sobre Zabbix</h1>
+  <p>Use estes links para tirar dúvidas, ler casos reais e acompanhar troubleshooting de Zabbix.</p>
+</section>
+<div class="grid">
+  {% for forum in forums %}
+  <article class="card">
+    <h2>{{ forum.name }}</h2>
+    <p>{{ forum.note }}</p>
+    <a class="btn primary" href="{{ forum.url }}" target="_blank" rel="noopener">Abrir fórum</a>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

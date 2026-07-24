@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Central de Casos · {{ cert.code }}</p>
+  <h1>{{ cert.title }}</h1>
+  <p>{{ cert.summary }}</p>
+  <div class="progress-head"><span>Progresso da certificação</span><strong>{{ cert.percent }}% · {{ cert.done }}/{{ cert.total }}</strong></div>
+  <div class="progress-track"><i style="width: {{ cert.percent }}%"></i></div>
+  <p class="doc-callout">📚 Consulta oficial: <a href="{{ cert.doc_url }}" target="_blank" rel="noopener">{{ cert.doc_label }}</a></p>
+</section>
+<div class="grid">
+  {% for row in cert.mission_rows %}
+  <article class="card">
+    <span class="badge">{{ cert.code }}</span>
+    <h2>{{ row.mission.title }}</h2>
+    <p>{{ row.mission.summary }}</p>
+    <div class="progress-head"><span>Progresso da fase</span><strong>{{ row.percent }}% · {{ row.done }}/{{ row.total }}</strong></div>
+    <div class="progress-track"><i style="width: {{ row.percent }}%"></i></div>
+    <a class="btn primary" href="{% url 'game:mission_detail_slug' row.mission.slug %}">Abrir fase</a>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

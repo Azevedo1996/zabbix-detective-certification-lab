@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero dashboard-hero">
+  <p class="eyebrow">Dashboard de progresso</p>
+  <h1>Zabbix Detective: A Missão</h1>
+  <p>Acompanhe o avanço do treinamento, entre rapidamente nas fases principais, abra as missões extras, consulte materiais de estudo e execute o Zabbix Lab.</p>
+  <div class="kpis dashboard-kpis">
+    <span>{{ solved }}/{{ total_challenges }} atividades concluídas</span>
+    <span>{{ total_percent }}% de progresso geral</span>
+    <span>{{ main_missions|length }} fases principais</span>
+    <span>{{ extra_missions|length }} missões extras</span>
+  </div>
+  <div class="case-actions">
+    <a class="btn primary" href="{% url 'game:case_center' %}">Abrir Central de Casos</a>
+    <a class="btn" href="{% url 'game:study_resources' %}">Abrir Estudos</a>
+    <a class="btn" href="{% url 'simulados:dashboard' %}">Abrir Prova</a>
+    <a class="btn zabbix" href="http://localhost:4000" target="_blank" rel="noopener">Abrir Zabbix Lab</a>
+  </div>
+</section>
+
+<section class="card progress-panel">
+  <h2>Progresso por certificação</h2>
+  <p class="muted">As fases principais são independentes. Você pode iniciar ZCU, ZCS, ZCP ou ZCE a qualquer momento.</p>
+  {% for row in cert_progress %}
+  <div class="progress-row labeled-progress">
+    <strong>{{ row.code }}</strong>
+    <div class="progress-track"><i style="width: {{ row.percent }}%"></i></div>
+    <span>{{ row.percent }}% · {{ row.done }}/{{ row.total }}</span>
+  </div>
+  {% endfor %}
+</section>
+
+<div class="dashboard-grid">
+  <section class="card dashboard-card">
+    <h2>Fases principais</h2>
+    <p class="muted">Trilha principal dividida por certificação.</p>
+    <div class="dash-list">
+      {% for row in phase_progress %}
+      <a class="dash-row rich-row" href="{% url 'game:mission_detail_slug' row.mission.slug %}">
+        <span><b>{{ row.mission.certification }}</b> · {{ row.mission.title }}<small>{{ row.done }}/{{ row.total }} concluídos</small></span>
+        <em>{{ row.percent }}%</em>
+      </a>
+      {% empty %}
+      <p class="muted">Nenhuma fase principal encontrada. Execute <code>python manage.py seed_game</code>.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="card dashboard-card">
+    <h2>Missões extras</h2>
+    <p class="muted">Treinos por tema, todos com múltipla escolha e prática no laboratório.</p>
+    <div class="dash-list compact">
+      {% for row in extra_progress %}
+      <a class="dash-row rich-row" href="{% url 'game:mission_detail_slug' row.mission.slug %}">
+        <span>{{ row.mission.title }}<small>{{ row.done }}/{{ row.total }} perguntas</small></span>
+        <em>{{ row.percent }}%</em>
+      </a>
+      {% empty %}
+      <p class="muted">Nenhuma missão extra encontrada. Execute <code>python manage.py seed_game</code>.</p>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock %}

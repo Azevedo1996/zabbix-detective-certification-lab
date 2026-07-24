@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Triggers complexas</p>
+  <h1>Triggers no detalhe: da coleta ao problema</h1>
+  <p>Guia para entender triggers nos mínimos detalhes, com explicação prática e link direto para o tópico correto da documentação oficial.</p>
+</section>
+{% for topic in topics %}
+<article class="card trigger-topic">
+  <h2>{{ topic.title }}</h2>
+  <p>{{ topic.text }}</p>
+  <p class="link-callout">📚 <a href="{{ topic.doc }}" target="_blank" rel="noopener">Abrir documentação oficial deste tópico</a></p>
+</article>
+{% endfor %}
+<section class="card">
+  <h2>Modelo mental para criar uma trigger boa</h2>
+  <ol>
+    <li>Qual item mede o sintoma?</li>
+    <li>Qual janela de tempo elimina ruído?</li>
+    <li>Qual limite representa impacto real?</li>
+    <li>Existe recuperação diferente do limite de disparo?</li>
+    <li>Existe dependência que deve suprimir o problema?</li>
+    <li>Quais tags vão ajudar filtro, ação e correlação?</li>
+    <li>Como validar o problema no Latest data e em Problems?</li>
+  </ol>
+</section>
+{% endblock %}

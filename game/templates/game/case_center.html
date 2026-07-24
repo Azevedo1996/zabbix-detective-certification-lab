@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Central de Casos</p>
+  <h1>Visão geral das 4 certificações</h1>
+  <p>A visão geral mostra apenas as quatro certificações. Para ver as fases internas, abra ZCU, ZCS, ZCP ou ZCE pelo menu lateral ou clique em uma certificação abaixo.</p>
+</section>
+<div class="grid cert-grid">
+  {% for row in cert_rows %}
+  <article class="card cert-card">
+    <span class="badge">{{ row.phase }} · {{ row.code }} · {{ row.level }}</span>
+    <h2>{{ row.title }}</h2>
+    <p>{{ row.summary }}</p>
+    <div class="progress-head"><span>Progresso da certificação</span><strong>{{ row.percent }}% · {{ row.done }}/{{ row.total }}</strong></div>
+    <div class="progress-track"><i style="width: {{ row.percent }}%"></i></div>
+    <p class="doc-callout">📚 Consulta oficial: <a href="{{ row.doc_url }}" target="_blank" rel="noopener">{{ row.doc_label }}</a></p>
+    <a class="btn primary" href="{% url 'game:certification_detail' row.code|lower %}">Abrir {{ row.code }}</a>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

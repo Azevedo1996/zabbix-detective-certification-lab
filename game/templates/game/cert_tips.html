@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Dicas por certificação</p>
+  <h1>{{ cert.code }} · Dicas de estudo</h1>
+  <p>{{ cert.summary }}</p>
+</section>
+<section class="card">
+  <h2>Dicas práticas</h2>
+  <ul>
+    {% for tip in cert.tips %}<li>{{ tip }}</li>{% endfor %}
+  </ul>
+</section>
+<section class="card">
+  <h2>Documentação oficial relacionada</h2>
+  {% for item in cert.topics %}
+  <p class="doc-callout">📚 <b>{{ item.topic }}</b>: <a href="{{ item.url }}" target="_blank" rel="noopener">abrir documentação oficial</a></p>
+  {% endfor %}
+</section>
+{% endblock %}

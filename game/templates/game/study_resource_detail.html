@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Material de estudo</p>
+  <h1>{{ resource.title }}</h1>
+  <p>{{ resource.description }}</p>
+  <a class="btn" href="{% url 'game:study_resources' %}">Voltar aos estudos</a>
+</section>
+<section class="card doc-content">
+  {{ content_html|safe }}
+</section>
+{% endblock %}

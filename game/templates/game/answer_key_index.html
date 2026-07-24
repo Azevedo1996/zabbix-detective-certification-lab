@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Gabarito</p>
+  <h1>Gabarito das questões e laboratórios</h1>
+  <p>O gabarito fica separado por Central de Casos e Missões extras. Na Central de Casos, o gabarito é organizado por certificação. Nas Missões extras, o gabarito é organizado por tópico/missão.</p>
+</section>
+<div class="grid">
+  <section class="card">
+    <h2>Central de Casos</h2>
+    <p class="muted">Gabarito por certificação.</p>
+    {% for cert in certs %}
+      <a class="dash-row" href="{% url 'game:answer_key_cases_cert' cert.code|lower %}"><span><b>{{ cert.code }}</b> · {{ cert.title }}</span><em>{{ cert.total }} questões</em></a>
+    {% endfor %}
+  </section>
+  <section class="card">
+    <h2>Missões extras</h2>
+    <p class="muted">Gabarito por tópico das missões extras.</p>
+    {% for mission in extras %}
+      <a class="dash-row" href="{% url 'game:answer_key_extra_mission' mission.slug %}"><span>{{ mission.title }}</span><em>{{ mission.total_challenges }} questões</em></a>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

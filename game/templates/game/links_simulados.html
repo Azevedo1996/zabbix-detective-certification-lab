@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Links e simulados</p>
+  <h1>Links por tema e simulados na internet</h1>
+  <p>Esta página separa documentação oficial por tema e também aponta recursos externos de prática. Recursos externos não são oficiais: use como treino, sempre validando pela documentação Zabbix.</p>
+</section>
+<section class="card">
+  <h2>Documentação oficial por tema</h2>
+  {% for item in docs %}
+  <p class="link-callout"><b>{{ item.theme }}</b><br>{{ item.note }}<br><a href="{{ item.url }}" target="_blank" rel="noopener">Abrir documentação</a></p>
+  {% endfor %}
+</section>
+<section class="card">
+  <h2>Simulados e prática na internet</h2>
+  {% for item in practice %}
+  <p class="link-callout"><b>{{ item.name }}</b><br>{{ item.note }}<br><a href="{{ item.url }}" target="_blank" rel="noopener">Abrir recurso</a></p>
+  {% endfor %}
+</section>
+{% endblock %}

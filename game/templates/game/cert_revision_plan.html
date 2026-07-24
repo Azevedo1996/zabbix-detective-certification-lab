@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Plano de revisão semanal</p>
+  <h1>{{ cert.code }} · Revisão semanal</h1>
+  <p>{{ cert.summary }}</p>
+</section>
+<section class="card">
+  <h2>Rotina semanal</h2>
+  {% for row in cert.revision %}
+  <div class="dash-row"><span><b>{{ row.day }}</b> · {{ row.focus }}</span></div>
+  {% endfor %}
+</section>
+<section class="card">
+  <h2>Tópicos oficiais para revisar</h2>
+  {% for item in cert.topics %}
+  <p class="doc-callout">📚 <b>{{ item.topic }}</b>: <a href="{{ item.url }}" target="_blank" rel="noopener">documentação oficial</a></p>
+  {% endfor %}
+</section>
+{% endblock %}
